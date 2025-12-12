@@ -22,15 +22,16 @@ nav ul {display:flex; list-style:none; gap:20px;}
 nav ul li a {color:white; text-decoration:none; font-weight:600; padding:6px 10px; border-radius:6px;}
 nav ul li a:hover{background: rgba(255,255,255,0.2);}
 
-/* Filter buttons */
-.filter-bar {
+/* Filter + Search */
+.filter-container {
     display:flex;
     justify-content:center;
     gap:15px;
-    margin:20px 0;
     flex-wrap:wrap;
+    margin:20px;
+    align-items:center;
 }
-.filter-bar button {
+.filter-container button {
     padding:10px 20px;
     border:none;
     border-radius:8px;
@@ -40,8 +41,15 @@ nav ul li a:hover{background: rgba(255,255,255,0.2);}
     font-weight:600;
     transition:0.3s;
 }
-.filter-bar button.active {background:#004d99;}
-.filter-bar button:hover {opacity:0.85; transform:scale(1.05);}
+.filter-container button.active {background:#004d99;}
+.filter-container button:hover {opacity:0.85; transform:scale(1.05);}
+.filter-container input[type="text"] {
+    padding:10px 15px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    width:200px;
+    font-size:1rem;
+}
 
 /* Notes Grid */
 .notes-grid {
@@ -87,7 +95,7 @@ footer .copyright{margin-top:10px; font-size:1rem;}
 
 /* Responsive */
 @media(max-width:768px){
-    .filter-bar{flex-direction:column; align-items:center;}
+    .filter-container{flex-direction:column; align-items:center;}
     nav ul{flex-direction:column; gap:10px; margin-top:10px;}
 }
 </style>
@@ -99,24 +107,24 @@ footer .copyright{margin-top:10px; font-size:1rem;}
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="Notes.html">Notes</a></li>
+            <li><a href="notes.html">Notes</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
     </nav>
 </header>
 
-<div class="filter-bar">
-    <button class="active" onclick="filterNotes('all')">All Levels</button>
+<div class="filter-container">
+    <button class="active" onclick="filterNotes('all')">All</button>
     <button onclick="filterNotes('4')">Level 4</button>
     <button onclick="filterNotes('5')">Level 5</button>
     <button onclick="filterNotes('6')">Level 6</button>
-    <!-- Modules -->
     <button onclick="filterNotes('ANAT101')">ANAT101</button>
     <button onclick="filterNotes('PHYS101')">PHYS101</button>
     <button onclick="filterNotes('PATH201')">PATH201</button>
     <button onclick="filterNotes('MICR202')">MICR202</button>
     <button onclick="filterNotes('CLIN301')">CLIN301</button>
     <button onclick="filterNotes('PHAR302')">PHAR302</button>
+    <input type="text" id="searchInput" placeholder="Quick search..." onkeyup="quickSearch()">
 </div>
 
 <div class="notes-grid" id="notesGrid"></div>
@@ -129,14 +137,22 @@ footer .copyright{margin-top:10px; font-size:1rem;}
     <div class="copyright">© 2025 Mbalizi CMT Notes Hub</div>
 </footer>
 
-<!-- External JS file -->
-<script src="notes.js"></script>
 <script>
+let notesData = [];
+
+async function loadNotes() {
+    const response = await fetch('notes.json');
+    notesData = await response.json();
+    renderNotes('all');
+}
+
 const notesGrid = document.getElementById('notesGrid');
 
 function renderNotes(filter='all'){
     notesGrid.innerHTML = '';
-    const filtered = filter === 'all' ? notes : notes.filter(n => n.level === filter || n.moduleCode === filter);
+    const filtered = notesData.filter(n => 
+        filter === 'all' || n.level === filter || n.moduleCode === filter
+    );
     filtered.forEach(note => {
         const card = document.createElement('div');
         card.classList.add('note-card');
@@ -150,14 +166,37 @@ function renderNotes(filter='all'){
     });
 }
 
+// Filter by button
 function filterNotes(filter){
-    document.querySelectorAll('.filter-bar button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.filter-container button').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
     renderNotes(filter);
 }
 
-// Initial render
-renderNotes();
+// Quick search
+function quickSearch(){
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = notesData.filter(n =>
+        n.topic.toLowerCase().includes(query) ||
+        n.moduleName.toLowerCase().includes(query) ||
+        n.moduleCode.toLowerCase().includes(query)
+    );
+    notesGrid.innerHTML = '';
+    filtered.forEach(note => {
+        const card = document.createElement('div');
+        card.classList.add('note-card');
+        card.innerHTML = `
+            <h3>${note.moduleCode} - ${note.moduleName}</h3>
+            <p><strong>Topic:</strong> ${note.topic}</p>
+            <p><strong>Level:</strong> CMT Level ${note.level}</p>
+            <a class="download-btn" href="${note.file}" download>Download</a>
+        `;
+        notesGrid.appendChild(card);
+    });
+}
+
+// Initial load
+loadNotes();
 </script>
 
 </body>
