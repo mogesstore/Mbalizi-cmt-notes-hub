@@ -1,8 +1,11 @@
 [
-  {"type":"daily","title":"Level 4 Anatomy","description":"Study skeletal and muscular system for 2 hours."},
-  {"type":"daily","title":"Level 5 Pathology","description":"Review cell injury and adaptation topics."},
-  {"type":"weekly","title":"Level 6 Clinical Medicine","description":"Focus on diabetes and hypertension cases this week."},
-  {"type":"weekly","title":"Level 4 Physiology","description":"Cover cardiovascular and respiratory system."},
-  {"type":"monthly","title":"Level 5 Microbiology","description":"Complete all bacteria classification topics."},
-  {"type":"monthly","title":"Level 6 Pharmacology","description":"Revise antibiotics and pharmacokinetics for the month."}
+  {"type":"daily","level":"4","title":"Anatomy","description":"Study skeletal and muscular system for 2 hours."},
+  {"type":"daily","level":"5","title":"Pathology","description":"Review cell injury and adaptation topics."},
+  {"type":"daily","level":"6","title":"Clinical Medicine","description":"Review diabetes cases for 2 hours."},
+  {"type":"weekly","level":"4","title":"Physiology","description":"Cover cardiovascular and respiratory system this week."},
+  {"type":"weekly","level":"5","title":"Microbiology","description":"Complete all bacteria classification topics."},
+  {"type":"weekly","level":"6","title":"Pharmacology","description":"Revise antibiotics and pharmacokinetics for the week."},
+  {"type":"monthly","level":"4","title":"Anatomy","description":"Revise all systems for the month."},
+  {"type":"monthly","level":"5","title":"Pathology","description":"Complete all cell injury topics."},
+  {"type":"monthly","level":"6","title":"Clinical Medicine","description":"Revise all major cases for the month."}
 ]
