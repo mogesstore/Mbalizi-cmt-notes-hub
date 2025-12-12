@@ -141,7 +141,7 @@ footer .copyright{margin-top:10px; font-size:1rem;}
 let notesData = [];
 
 async function loadNotes() {
-    const response = await fetch('notes.json');
+    const response = await fetch('Notes.json');
     notesData = await response.json();
     renderNotes('all');
 }
