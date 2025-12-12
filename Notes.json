@@ -1,9 +1,8 @@
-// notes.js
-const notes = [
-    {level:'4', moduleCode:'ANAT101', moduleName:'Anatomy', topic:'Skeletal System', file:'#'},
-    {level:'4', moduleCode:'PHYS101', moduleName:'Physiology', topic:'Cardiovascular System', file:'#'},
-    {level:'5', moduleCode:'PATH201', moduleName:'Pathology', topic:'Cell Injury & Adaptation', file:'#'},
-    {level:'5', moduleCode:'MICR202', moduleName:'Microbiology', topic:'Bacteria Classification', file:'#'},
-    {level:'6', moduleCode:'CLIN301', moduleName:'Clinical Medicine', topic:'Diabetes Management', file:'#'},
-    {level:'6', moduleCode:'PHAR302', moduleName:'Pharmacology', topic:'Antibiotics', file:'#'}
-];
+[
+  {"level":"4","moduleCode":"ANAT101","moduleName":"Anatomy","topic":"Skeletal System","file":"#"},
+  {"level":"4","moduleCode":"PHYS101","moduleName":"Physiology","topic":"Cardiovascular System","file":"#"},
+  {"level":"5","moduleCode":"PATH201","moduleName":"Pathology","topic":"Cell Injury & Adaptation","file":"#"},
+  {"level":"5","moduleCode":"MICR202","moduleName":"Microbiology","topic":"Bacteria Classification","file":"#"},
+  {"level":"6","moduleCode":"CLIN301","moduleName":"Clinical Medicine","topic":"Diabetes Management","file":"#"},
+  {"level":"6","moduleCode":"PHAR302","moduleName":"Pharmacology","topic":"Antibiotics","file":"#"}
+]
