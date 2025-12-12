@@ -1,0 +1,8 @@
+[
+  {"type":"daily","title":"Level 4 Anatomy","description":"Study skeletal and muscular system for 2 hours."},
+  {"type":"daily","title":"Level 5 Pathology","description":"Review cell injury and adaptation topics."},
+  {"type":"weekly","title":"Level 6 Clinical Medicine","description":"Focus on diabetes and hypertension cases this week."},
+  {"type":"weekly","title":"Level 4 Physiology","description":"Cover cardiovascular and respiratory system."},
+  {"type":"monthly","title":"Level 5 Microbiology","description":"Complete all bacteria classification topics."},
+  {"type":"monthly","title":"Level 6 Pharmacology","description":"Revise antibiotics and pharmacokinetics for the month."}
+]
