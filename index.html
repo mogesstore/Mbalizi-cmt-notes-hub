@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mbalizi CMT Notes Hub</title>
+    <style>
+        /* Reset & basic */
+        * { margin:0; padding:0; box-sizing:border-box; font-family: Arial,sans-serif; }
+        body { background:#f0f4f8; color:#333; }
 
+        /* Modal */
+        .modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:999; }
+        .modal-content { background:#fff; padding:30px 40px; border-radius:12px; text-align:center; max-width:400px; width:90%; }
+        .modal-content h1 { color:#004080; margin-bottom:20px; }
+        .modal-content p { margin-bottom:20px; font-size:1rem; }
+        .level-buttons button { padding:10px 20px; margin:5px; font-size:1rem; border:none; border-radius:6px; cursor:pointer; color:white; }
+        .level-buttons button:nth-child(1){background:#007acc;}
+        .level-buttons button:nth-child(2){background:#009933;}
+        .level-buttons button:nth-child(3){background:#004d99;}
+
+        /* Dashboard */
+        .hidden { display:none; }
+        header { background:#004080; color:white; padding:15px 30px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+        header .logo { font-weight:bold; font-size:1.5rem; }
+        nav ul { list-style:none; display:flex; gap:20px; flex-wrap:wrap; }
+        nav ul li a { color:white; text-decoration:none; font-weight:bold; transition:0.3s; }
+        nav ul li a:hover { text-decoration:underline; }
+
+        main { padding:20px; }
+        .welcome-message h2 { color:#007acc; margin-bottom:10px; }
+        .notes-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:20px; margin:20px 0; }
+        .note-card { background:white; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+        .note-card h3 { font-size:1.1rem; margin-bottom:10px; }
+        .note-card a { text-decoration:none; color:white; background:#007acc; padding:8px 12px; border-radius:5px; transition:0.3s; }
+        .note-card a:hover { background:#004080; }
+
+        section h3 { color:#009933; margin-top:30px; margin-bottom:10px; }
+
+        footer { background:#004080; color:white; padding:15px; text-align:center; margin-top:30px; font-size:0.9rem; }
+        footer a { color:#00ffcc; text-decoration:none; margin:0 5px; }
+        footer a:hover { text-decoration:underline; }
+
+        @media(max-width:768px){
+            header { flex-direction:column; gap:10px; }
+            nav ul { flex-direction:column; gap:10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Welcome Modal -->
+<div id="welcomeScreen" class="modal">
+    <div class="modal-content">
+        <h1>Karibu Mbalizi CMT Notes Hub</h1>
+        <p>Tafadhali chagua level yako ya CMT:</p>
+        <div class="level-buttons">
+            <button onclick="selectLevel(4)">CMT Level 4</button>
+            <button onclick="selectLevel(5)">CMT Level 5</button>
+            <button onclick="selectLevel(6)">CMT Level 6</button>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" class="hidden">
+    <header>
+        <div class="logo">Mbalizi CMT Notes Hub</div>
+        <nav>
+            <ul>
+                <li><a href="#notes">Notes</a></li>
+                <li><a href="#exams">Exams</a></li>
+                <li><a href="#study-plans">Study Plans</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="welcome-message">
+            <h2 id="userLevelWelcome">Welcome!</h2>
+            <p>Basement karibu kwenye hub yako ya kusoma. Chagua module au note kuendelea.</p>
+        </section>
+
+        <section class="latest-notes" id="notes">
+            <h3>Latest Notes</h3>
+            <div class="notes-grid" id="notesGrid">
+                <!-- JS injects notes -->
+            </div>
+        </section>
+
+        <section class="exams" id="exams">
+            <h3>Past Exams</h3>
+            <div class="notes-grid" id="examsGrid">
+                <!-- JS injects exams -->
+            </div>
+        </section>
+
+        <section class="study-plans" id="study-plans">
+            <h3>Recommended Study Plans</h3>
+            <p>Follow structured guides to ace your exams efficiently!</p>
+        </section>
+
+        <section class="about" id="about">
+            <h3>About Mbalizi CMT Notes Hub</h3>
+            <p>Mbalizi CMT Notes Hub ni platform ya kisasa kwa wanafunzi wa Clinical Medicine & Technology kusoma notes, mitihani, na mipango ya kujifunzia. Inafanya kazi vizuri kwa PC na tablet. Designed with modern blue & green theme.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mbalizi CMT Notes Hub. All rights reserved. |
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms & Conditions</a>
+        </p>
+    </footer>
+</div>
+
+<script>
+    // Sample notes & exams data
+    const latestNotes = [
+        { title: "Year 1 Module 1 Notes", link: "#" },
+        { title: "Year 2 Module 3 Notes", link: "#" },
+        { title: "Clinical Exam Prep 2025", link: "#" }
+    ];
+    const pastExams = [
+        { title: "CMT Exam 2024", link: "#" },
+        { title: "CMT Exam 2023", link: "#" }
+    ];
+
+    // Function for level selection
+    function selectLevel(level){
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('userLevelWelcome').innerText = `Karibu, CMT Level ${level} Student!`;
+
+        // Load notes
+        const notesGrid = document.getElementById('notesGrid');
+        latestNotes.forEach(note => {
+            const div = document.createElement('div');
+            div.classList.add('note-card');
+            div.innerHTML = `<h3>${note.title}</h3><a href="${note.link}" target="_blank">Download</a>`;
+            notesGrid.appendChild(div);
+        });
+
+        // Load exams
+        const examsGrid = document.getElementById('examsGrid');
+        pastExams.forEach(exam => {
+            const div = document.createElement('div');
+            div.classList.add('note-card');
+            div.innerHTML = `<h3>${exam.title}</h3><a href="${exam.link}" target="_blank">Download</a>`;
+            examsGrid.appendChild(div);
+        });
+    }
+</script>
+
+</body>
+</html>
