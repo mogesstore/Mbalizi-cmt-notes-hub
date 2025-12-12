@@ -125,7 +125,7 @@ footer .copyright{margin-top:10px; font-size:1rem;}
 let planData = [];
 
 async function loadPlans(){
-    const response = await fetch('studyplan.json');
+    const response = await fetch('Studyplan.json');
     planData = await response.json();
     renderPlans('all');
 }
