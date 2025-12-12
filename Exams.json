@@ -1,0 +1,13 @@
+[
+  {"level":"4","exam":"Anatomy Midterm","type":"midterm","date":"2025-12-20","time":"09:00 AM","venue":"Lecture Hall 1","review":"Focus on skeletal and muscular system diagrams, practice labeling bones."},
+  {"level":"4","exam":"Physiology Quiz","type":"quiz","date":"2025-12-22","time":"11:00 AM","venue":"Lab 2","review":"Revise cardiovascular and respiratory system questions from last year."},
+  {"level":"4","exam":"Biochemistry Final","type":"final","date":"2025-12-28","time":"10:00 AM","venue":"Lecture Hall 2","review":"Revise enzyme kinetics and metabolic pathways."},
+
+  {"level":"5","exam":"Pathology Midterm","type":"midterm","date":"2025-12-21","time":"10:00 AM","venue":"Lecture Hall 2","review":"Cell injury and adaptation topics, answer practice questions."},
+  {"level":"5","exam":"Microbiology Quiz","type":"quiz","date":"2025-12-23","time":"01:00 PM","venue":"Lab 3","review":"Bacteria classification tables, memorize key pathogens."},
+  {"level":"5","exam":"Pharmacology Final","type":"final","date":"2025-12-29","time":"02:00 PM","venue":"Lecture Hall 3","review":"Revise major drug classes and pharmacokinetics."},
+
+  {"level":"6","exam":"Clinical Medicine Final","type":"final","date":"2025-12-24","time":"09:00 AM","venue":"Lecture Hall 3","review":"Revise diabetes, hypertension, and key clinical cases."},
+  {"level":"6","exam":"Surgery Quiz","type":"quiz","date":"2025-12-26","time":"11:00 AM","venue":"Lab 1","review":"Practice surgical procedures and safety protocols."},
+  {"level":"6","exam":"Pharmacology Midterm","type":"midterm","date":"2025-12-30","time":"10:00 AM","venue":"Lecture Hall 1","review":"Antibiotics, pharmacokinetics, and drug interactions."}
+]
