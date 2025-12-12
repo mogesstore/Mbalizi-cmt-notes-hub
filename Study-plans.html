@@ -29,6 +29,7 @@ nav ul li a:hover{background: rgba(255,255,255,0.2);}
     gap:15px;
     flex-wrap:wrap;
     margin:20px;
+    align-items:center;
 }
 .filter-bar button {
     padding:10px 20px;
@@ -42,6 +43,26 @@ nav ul li a:hover{background: rgba(255,255,255,0.2);}
 }
 .filter-bar button.active {background:#004d99;}
 .filter-bar button:hover {opacity:0.85; transform:scale(1.05);}
+
+/* Level Filter */
+.level-filter {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+.level-filter button {
+    padding:8px 16px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#007acc;
+    color:white;
+    font-weight:600;
+    transition:0.3s;
+}
+.level-filter button.active {background:#004080;}
+.level-filter button:hover {opacity:0.85; transform:scale(1.05);}
 
 /* Study Plan Grid */
 .plan-grid {
@@ -85,7 +106,7 @@ footer .copyright{margin-top:10px; font-size:1rem;}
 
 /* Responsive */
 @media(max-width:768px){
-    .filter-bar{flex-direction:column; align-items:center;}
+    .filter-bar, .level-filter{flex-direction:column; align-items:center;}
     nav ul{flex-direction:column; gap:10px; margin-top:10px;}
 }
 </style>
@@ -105,14 +126,13 @@ footer .copyright{margin-top:10px; font-size:1rem;}
 </header>
 
 <div class="filter-bar">
-    <button class="active" onclick="filterPlans('all')">All</button>
-    <button onclick="filterPlans('daily')">Daily</button>
-    <button onclick="filterPlans('weekly')">Weekly</button>
-    <button onclick="filterPlans('monthly')">Monthly</button>
-    <button onclick="filterNotes('4')">Level 4</button>
-    <button onclick="filterNotes('5')">Level 5</button>
-    <button onclick="filterNotes('6')">Level 6</button>
+    <button class="active" onclick="filterType('all')">All</button>
+    <button onclick="filterType('daily')">Daily</button>
+    <button onclick="filterType('weekly')">Weekly</button>
+    <button onclick="filterType('monthly')">Monthly</button>
 </div>
+
+<div class="level-filter" id="levelFilter"></div>
 
 <div class="plan-grid" id="planGrid"></div>
 
@@ -126,23 +146,61 @@ footer .copyright{margin-top:10px; font-size:1rem;}
 
 <script>
 let planData = [];
+let currentType = 'all';
+let currentLevel = 'all';
 
 async function loadPlans(){
     const response = await fetch('Studyplan.json');
     planData = await response.json();
-    renderPlans('all');
+    renderLevelFilter();
+    renderPlans();
 }
 
 const planGrid = document.getElementById('planGrid');
+const levelFilterDiv = document.getElementById('levelFilter');
 
-function renderPlans(filter='all'){
+// Render Level Filter based on current type
+function renderLevelFilter(){
+    levelFilterDiv.innerHTML = '';
+    const levels = [...new Set(planData.filter(p => currentType==='all' || p.type===currentType).map(p=>p.level))];
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'All Levels';
+    allBtn.classList.add(currentLevel==='all'?'active':'');
+    allBtn.onclick = () => {currentLevel='all'; updateFilters();};
+    levelFilterDiv.appendChild(allBtn);
+
+    levels.forEach(lvl => {
+        const btn = document.createElement('button');
+        btn.textContent = 'Level ' + lvl;
+        if(currentLevel===lvl) btn.classList.add('active');
+        btn.onclick = () => {currentLevel=lvl; updateFilters();};
+        levelFilterDiv.appendChild(btn);
+    });
+}
+
+function updateFilters(){
+    document.querySelectorAll('.level-filter button').forEach(btn => btn.classList.remove('active'));
+    if(currentLevel==='all'){
+        levelFilterDiv.querySelector('button').classList.add('active');
+    } else {
+        Array.from(levelFilterDiv.querySelectorAll('button')).forEach(btn=>{
+            if(btn.textContent === 'Level ' + currentLevel) btn.classList.add('active');
+        });
+    }
+    renderPlans();
+}
+
+function renderPlans(){
     planGrid.innerHTML = '';
-    const filtered = filter === 'all' ? planData : planData.filter(p => p.type === filter);
+    const filtered = planData.filter(p => 
+        (currentType==='all' || p.type===currentType) &&
+        (currentLevel==='all' || p.level===currentLevel)
+    );
     filtered.forEach(plan => {
         const card = document.createElement('div');
         card.classList.add('plan-card');
         card.innerHTML = `
-            <h3>${plan.title}</h3>
+            <h3>Level ${plan.level} - ${plan.title}</h3>
             <p><strong>Type:</strong> ${plan.type.charAt(0).toUpperCase() + plan.type.slice(1)}</p>
             <p>${plan.description}</p>
         `;
@@ -150,13 +208,17 @@ function renderPlans(filter='all'){
     });
 }
 
-function filterPlans(filter){
+// Filter by type
+function filterType(type){
     document.querySelectorAll('.filter-bar button').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
-    renderPlans(filter);
+    currentType = type;
+    currentLevel = 'all';
+    renderLevelFilter();
+    renderPlans();
 }
 
-// Load data on page load
+// Initial load
 loadPlans();
 </script>
 
