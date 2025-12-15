@@ -19,40 +19,49 @@ header{
     flex-wrap:wrap;
 }
 .logo{color:white;font-size:1.6rem;font-weight:bold;}
-nav ul{
-    list-style:none;
-    display:flex;
-    gap:20px;
-}
-nav ul li a{
-    color:white;
-    text-decoration:none;
-    font-weight:600;
-}
+nav ul{list-style:none;display:flex;gap:20px;}
+nav ul li a{color:white;text-decoration:none;font-weight:600;}
 
 /* NOTIFICATION */
 .notification{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 22px;
     background:#009933;
     color:white;
-    padding:15px;
-    text-align:center;
     font-weight:bold;
+    animation:slideDown .5s ease;
+}
+.notification span{font-size:1rem}
+.notification button{
+    background:none;
+    border:none;
+    color:white;
+    font-size:1.4rem;
+    cursor:pointer;
+}
+
+@keyframes slideDown{
+    from{transform:translateY(-100%)}
+    to{transform:translateY(0)}
 }
 
 /* HERO */
 .hero{
     min-height:300px;
-    background:url('https://images.pexels.com/photos/256494/pexels-photo-256494.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover;
+    background:
+      linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+      url('https://images.pexels.com/photos/256494/pexels-photo-256494.jpeg?auto=compress&cs=tinysrgb&w=1600')
+      center/cover no-repeat;
     display:flex;
     align-items:center;
     justify-content:center;
     color:white;
     text-align:center;
 }
-.hero h1{
-    font-size:2.5rem;
-    text-shadow:2px 2px 6px rgba(0,0,0,0.6);
-}
+.hero h1{font-size:2.5rem;text-shadow:2px 2px 6px rgba(0,0,0,0.6);}
+.hero p{margin-top:6px}
 
 /* FOOTER */
 footer{
@@ -66,9 +75,10 @@ footer{
 
 <body>
 
-<!-- LIVE NOTIFICATION -->
-<div class="notification" id="liveNotice">
-📢 EXAM UPDATE: soma ufaulu sio kuturidhisha
+<!-- NOTIFICATION BAR -->
+<div id="notificationBox" class="notification">
+    <span id="notificationText">Loading updates...</span>
+    <button onclick="closeNotice()">×</button>
 </div>
 
 <header>
@@ -94,12 +104,72 @@ footer{
     © 2025 Mbalizi CMT Notes Hub • All Rights Reserved
 </footer>
 
+<!-- SOUND -->
+<audio id="notifySound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-interface-hint-notification-911.mp3">
+</audio>
+
 <script>
-// GET LEVEL
+// ===== LEVEL =====
 const level = localStorage.getItem("cmtLevel");
 if(level){
     document.getElementById("welcomeText").innerText =
         `Karibu, CMT Level ${level} Student`;
+}
+
+// ===== NOTIFICATIONS PER LEVEL =====
+const notifications = {
+    "4":[
+        "📢 L4: Cat1 hivi karibuni somaa saana",
+        "📢 L4: Physiology practical wiki ijayo",
+        "📢 L4: Notes mpya zimeongezwa"
+    ],
+    "5":[
+        "📢 L5: Pathology midterm karibu sana",
+        "📢 L5: Microbiology quiz Ijumaa",
+        "📢 L5: Exams review mpya zimewekwa"
+    ],
+    "6":[
+        "📢 L6: Clinical Medicine final next week",
+        "📢 L6: Ward rotation assessment",
+        "📢 L6: Study plan mpya imeupdate"
+    ]
+};
+
+const box = document.getElementById("notificationBox");
+const textEl = document.getElementById("notificationText");
+const sound = document.getElementById("notifySound");
+
+let index = 0;
+let list = [];
+
+// INIT
+function initNotifications(){
+    if(!level || !notifications[level]){
+        box.style.display="none";
+        return;
+    }
+    list = notifications[level];
+    showNotification();
+}
+
+// SHOW
+function showNotification(){
+    textEl.innerText = list[index];
+    sound.currentTime = 0;
+    sound.play();
+
+    index++;
+    if(index >= list.length) index = 0;
+}
+
+// ROTATE EVERY 4 SECONDS
+initNotifications();
+setInterval(showNotification, 4000);
+
+// CLOSE
+function closeNotice(){
+    box.style.display="none";
 }
 </script>
 
