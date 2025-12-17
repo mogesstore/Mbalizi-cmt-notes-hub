@@ -1,8 +1,50 @@
 [
-  {"level":"4","moduleCode":"ANAT101","moduleName":"Anatomy","topic":"Skeletal System","file":"#"},
-  {"level":"4","moduleCode":"PHYS101","moduleName":"Physiology","topic":"Cardiovascular System","file":"#"},
-  {"level":"5","moduleCode":"PATH201","moduleName":"Pathology","topic":"Cell Injury & Adaptation","file":"#"},
-  {"level":"5","moduleCode":"MICR202","moduleName":"Microbiology","topic":"Bacteria Classification","file":"#"},
-  {"level":"6","moduleCode":"CLIN301","moduleName":"Clinical Medicine","topic":"Diabetes Management","file":"#"},
-  {"level":"6","moduleCode":"PHAR302","moduleName":"Pharmacology","topic":"Antibiotics","file":"#"}
+  {
+    "level": "4",
+    "moduleCode": "ANAT101",
+    "moduleName": "Anatomy",
+    "topic": "Skeletal System",
+    "fileType": "pptx",
+    "file": "Skeletal_System.pptx"
+  },
+  {
+    "level": "4",
+    "moduleCode": "PHYS101",
+    "moduleName": "Physiology",
+    "topic": "Cardiovascular System",
+    "fileType": "docx",
+    "file": "Cardiovascular_System.docx"
+  },
+  {
+    "level": "5",
+    "moduleCode": "PATH201",
+    "moduleName": "Pathology",
+    "topic": "Cell Injury & Adaptation",
+    "fileType": "pptx",
+    "file": "Cell_Injury.pptx"
+  },
+  {
+    "level": "5",
+    "moduleCode": "MICR202",
+    "moduleName": "Microbiology",
+    "topic": "Bacteria Classification",
+    "fileType": "docx",
+    "file": "Bacteria_Classification.docx"
+  },
+  {
+    "level": "6",
+    "moduleCode": "CLIN301",
+    "moduleName": "Clinical Medicine",
+    "topic": "Diabetes Management",
+    "fileType": "pptx",
+    "file": "Diabetes_Management.pptx"
+  },
+  {
+    "level": "6",
+    "moduleCode": "PHAR302",
+    "moduleName": "Pharmacology",
+    "topic": "Antibiotics",
+    "fileType": "docx",
+    "file": "Antibiotics.docx"
+  }
 ]
