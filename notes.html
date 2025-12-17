@@ -113,6 +113,7 @@ footer .copyright{margin-top:10px; font-size:1rem;}
     </nav>
 </header>
 
+<!-- Filter Buttons + Search -->
 <div class="filter-container">
     <button class="active" onclick="filterNotes('all')">All</button>
     <button onclick="filterNotes('4')">Level 4</button>
@@ -155,7 +156,7 @@ function renderNotes(filter='all'){
             <h3>${note.moduleCode} - ${note.moduleName}</h3>
             <p><strong>Topic:</strong> ${note.topic}</p>
             <p><strong>Level:</strong> CMT Level ${note.level}</p>
-            <a class="download-btn" href="${note.file}" download>Download</a>
+            <a class="download-btn" href="${note.file}" download>Download ${note.fileType.toUpperCase()}</a>
         `;
         notesGrid.appendChild(card);
     });
@@ -184,7 +185,7 @@ function quickSearch(){
             <h3>${note.moduleCode} - ${note.moduleName}</h3>
             <p><strong>Topic:</strong> ${note.topic}</p>
             <p><strong>Level:</strong> CMT Level ${note.level}</p>
-            <a class="download-btn" href="${note.file}" download>Download</a>
+            <a class="download-btn" href="${note.file}" download>Download ${note.fileType.toUpperCase()}</a>
         `;
         notesGrid.appendChild(card);
     });
